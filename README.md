@@ -5,4 +5,4 @@ A terminal-based text editor.
 ### Linux and MacOS
 `curl https://raw.githubusercontent.com/GenericProgrammer1234/Noml/main/install.sh -OL && bash install.sh && rm install.sh`
 ### Windows
-`curl https://raw.githubusercontent.com/GenericProgrammer1234/Noml/main/install.bat -OL && install.bat`
+`curl.exe https://raw.githubusercontent.com/GenericProgrammer1234/Noml/main/install.bat -OL && install.bat`
