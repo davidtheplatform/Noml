@@ -1,5 +1,5 @@
 # Noml
-A terminal-based text editor.
+A terminal-based text editor. Please do not use the installer right now and clone the GitHub repo yourself then add it to the PYTHONPATH and alias it.
 
 ## Installation
 ### Linux and MacOS
