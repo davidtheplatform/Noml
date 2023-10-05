@@ -1,5 +1,9 @@
-from os import system, walk
+from os import system, walk, listdir
+from os.path import exists, abspath, isfile, isdir, join, relpath
 from noml.sysimps import getch
+
+class Global:
+	windows = []
 
 def word_at_idx(input_string, index):
     words = input_string.split()
@@ -12,7 +16,61 @@ def word_at_idx(input_string, index):
         current_index = word_end + 1
     return None
 
+def windows():
+	Global.windows.append("Windows Manager")
+	while True:
+		system("clear")
+		for idx, window in enumerate(Global.windows):
+			print(f"{idx+1}. {window}")
+
+		char = getch()
+
+		if char == "q":
+			Global.windows.pop()
+			return
+
+def filestructure_render(directory, current, indentation=0, doabspath=True):
+    print(f"{' ' * indentation + ('|---- ' if indentation > 0 else '')}{abspath(directory) if doabspath else directory} ----|")
+
+    for item in listdir(directory):
+        item_path = join(directory, item)
+        if isfile(item_path):
+            if current and item_path == current:
+                print(f"{' ' * (indentation+2)}|---- [{abspath(item_path) if doabspath else item_path}]")
+            else:
+                print(f"{' ' * (indentation+2)}|---- {abspath(item_path) if doabspath else item_path}")
+        elif isdir(item_path):
+            filestructure_render(item_path, current, indentation=indentation+2, doabspath=doabspath)
+
+
+def filestructure(directory, current=None):
+	Global.windows.append("Filesystem Window")
+	doabspath = True
+	current = abspath(current)
+	while True:
+		system("clear")
+		filestructure_render(abspath(directory), current, doabspath=doabspath)
+
+		char = getch()
+		if char == "q":
+			Global.windows.pop()
+			return
+		elif char == "a":
+			doabspath = not doabspath
+		elif char == "j":
+			target = input("Target: ")
+			current = abspath(target)
+			directory = "/".join(abspath(target).split("/")[:-1])
+		elif char == "o":
+			editor(current)
+		# elif char == "qn":
+		# 	system("tput cnorm")
+		# 	system('echo -n -e "\033]0;\007"')
+		# 	system("clear")
+		# 	exit()
+
 def editor(filename):
+	Global.windows.append(f"Editor Window ({filename})")
 	lines = open(filename, "r").readlines()
 	for idx, line in enumerate(lines):
 		lines[idx] = [char for char in line.replace("\n", "")]
@@ -37,6 +95,7 @@ def editor(filename):
 				cmdargs = []
 
 			if cmdname in ("q", "quit"):
+				Global.windows.pop()
 				return
 			elif cmdname in ("qn", "quitnoml"):
 				system("tput cnorm")
@@ -81,8 +140,10 @@ def editor(filename):
 				linenumbers = not linenumbers
 			elif cmdname in ("v", "visualeditor"):
 				visualeditor = not visualeditor
-			# elif cmdname in ("fs", "filestructure"):
-			# 	filestructure("./", fiename)
+			elif cmdname in ("fs", "filestructure"):
+				filestructure("./", filename)
+			elif cmdname in ("w", "windows"):
+				windows()
 			else:
 				pass
 		else:
@@ -118,6 +179,7 @@ def editor(filename):
 
 
 def run():
+	Global.windows.append("Starting Window")
 	window = ""
 	file = ""
 
@@ -141,13 +203,32 @@ def run():
 		except:
 			cmdargs = []
 
-		if cmdname in ("q", "quit", "qn", "quitnoml"):
-			return
-		elif cmdname in ("o", "open"):
-			window = "file"
-			try:
-				file = cmdargs[0]
-			except:
-				file = "untitled"
-		else:
-			pass
+		try:
+			if cmdname in ("q", "quit", "qn", "quitnoml"):
+				Global.windows.pop()
+				return
+			elif cmdname in ("o", "open"):
+				window = "file"
+				if exists(cmdargs[0]):
+					file = cmdargs[0]
+				else:
+					raise FileNotFoundError
+			elif cmdname in ("n", "new"):
+				try:
+					file = cmdargs[0]
+				except:
+					file = "untitled"
+				system(f"echo ' ' > {file}")
+				window = "file"
+			elif cmdname in ("fs", "filestructure"):
+				filestructure("./")
+			elif cmdname in ("w", "windows"):
+				windows()
+			else:
+				pass
+		except Exception as e:
+			print(e) 
+			window = ""
+			file = ""
+			print("\033[0;31mERROR\033[0m")
+			getch()
