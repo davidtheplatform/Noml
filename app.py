@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from noml.editor import run
+from editor import run
 from os import system
 
 system("tput civis")
