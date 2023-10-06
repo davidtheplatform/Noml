@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
+from commands import echo, clear, tput
 from editor import run
 from os import system
 
-system("tput civis")
-system('echo -n -e "\033]0;Noml\007"')
-system("clear")
+tput("civis")
+echo("Noml")
+clear()
 run()
-system("tput cnorm")
-system('echo -n -e "\033]0;\007"')
-system("clear")
+tput("cnorm")
+echo("")
+clear()
