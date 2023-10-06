@@ -4,7 +4,7 @@ Welcome to Noml's documentation! This will cover what you can do with Noml, by d
 
 # Commmands
 -----------
-Format: short <args> <optargs?> (long) (mode) - desc
+Format: short \<args> <optargs?> (long) (mode) - desc
 
 q (quit) - This command will quit the current window.
 
