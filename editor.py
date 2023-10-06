@@ -17,23 +17,17 @@ def word_at_idx(input_string, index):
     return None
 
 def windows():
-    Global.windows.append("Windows Manager")
-    current_window = 0
+	Global.windows.append("Windows Manager")
+	while True:
+		system("clear")
+		for idx, window in enumerate(Global.windows):
+			print(f"{idx+1}. {window}")
 
-    while True:
-        system("clear")
-        for idx, window in enumerate(Global.windows):
-            print(f"{idx+1}. {window}")
+		char = getch()
 
-        char = getch()
-
-        if char == "q":
-            Global.windows.pop()
-            return
-        elif char == "\x1b[D" and current_window > 0:
-            current_window -= 1
-        elif char == "\x1b[C" and current_window < len(Global.windows) - 1:
-            current_window += 1
+		if char == "q":
+			Global.windows.pop()
+			return
 
 def filestructure_render(directory, current, indentation=0, doabspath=True):
     print(f"{' ' * indentation + ('|---- ' if indentation > 0 else '')}{abspath(directory) if doabspath else directory} ----|")
