@@ -1,9 +1,46 @@
 from os import system, walk, listdir
 from os.path import exists, abspath, isfile, isdir, join, relpath
-from noml.sysimps import getch
+from sysimps import getch
 
 class Global:
 	windows = []
+
+class WindowsManager:
+    def __init__(self):
+        self.windows = []
+
+    def append(self, window):
+        """
+        Append a window to the list of windows.
+
+        Args:
+            window: The window object to append.
+
+        Return:
+            None
+        """
+        self.windows.append(window)
+
+    def pop(self):
+        """
+        Remove and return the last window in the list of windows.
+        """
+        self.windows.pop()
+
+    def remove(self, window):
+        """
+        Remove a window from the list of windows.
+
+        Parameters:
+            window (object): The window object to be removed.
+
+        Returns:
+            None
+        """
+        self.windows.remove(window)
+
+# Create an instance of the WindowsManager class
+windows_manager = WindowsManager()
 
 def word_at_idx(input_string, index):
     words = input_string.split()
@@ -17,7 +54,7 @@ def word_at_idx(input_string, index):
     return None
 
 def windows():
-	Global.windows.append("Windows Manager")
+	windows_manager.append("Windows Manager")
 	while True:
 		system("clear")
 		for idx, window in enumerate(Global.windows):
@@ -26,7 +63,7 @@ def windows():
 		char = getch()
 
 		if char == "q":
-			Global.windows.pop()
+			windows_manager.pop()
 			return
 
 def filestructure_render(directory, current, indentation=0, doabspath=True):
@@ -44,7 +81,7 @@ def filestructure_render(directory, current, indentation=0, doabspath=True):
 
 
 def filestructure(directory, current=None):
-	Global.windows.append("Filesystem Window")
+	windows_manager.append("Filesystem Window")
 	doabspath = True
 	current = abspath(current)
 	while True:
@@ -53,7 +90,7 @@ def filestructure(directory, current=None):
 
 		char = getch()
 		if char == "q":
-			Global.windows.pop()
+			windows_manager.pop()
 			return
 		elif char == "a":
 			doabspath = not doabspath
@@ -63,14 +100,9 @@ def filestructure(directory, current=None):
 			directory = "/".join(abspath(target).split("/")[:-1])
 		elif char == "o":
 			editor(current)
-		# elif char == "qn":
-		# 	system("tput cnorm")
-		# 	system('echo -n -e "\033]0;\007"')
-		# 	system("clear")
-		# 	exit()
 
 def editor(filename):
-	Global.windows.append(f"Editor Window ({filename})")
+	windows_manager.append(f"Editor Window ({filename})")
 	lines = open(filename, "r").readlines()
 	for idx, line in enumerate(lines):
 		lines[idx] = [char for char in line.replace("\n", "")]
@@ -95,7 +127,7 @@ def editor(filename):
 				cmdargs = []
 
 			if cmdname in ("q", "quit"):
-				Global.windows.pop()
+				windows_manager.pop()
 				return
 			elif cmdname in ("qn", "quitnoml"):
 				system("tput cnorm")
@@ -179,7 +211,7 @@ def editor(filename):
 
 
 def run():
-	Global.windows.append("Starting Window")
+	windows_manager.append("Starting Window")
 	window = ""
 	file = ""
 
@@ -205,7 +237,7 @@ def run():
 
 		try:
 			if cmdname in ("q", "quit", "qn", "quitnoml"):
-				Global.windows.pop()
+				windows_manager.pop()
 				return
 			elif cmdname in ("o", "open"):
 				window = "file"
