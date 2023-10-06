@@ -1,6 +1,6 @@
-import os
-import os.path
-import sysimps
+from os import system, walk, listdir
+from os.path import exists, abspath, isfile, isdir, join, relpath
+from noml.sysimps import getch
 
 class Global:
 	windows = []
@@ -9,46 +9,49 @@ def word_at_idx(input_string, index):
     words = input_string.split()
     current_index = 0
     for word in words:
-        if current_index <= index < current_index + len(word):
+        word_start = current_index
+        word_end = current_index + len(word)
+        if word_start <= index < word_end:
             return word
-        current_index += len(word) + 1
+        current_index = word_end + 1
     return None
 
 def windows():
-    Global.windows.append("Windows Manager")
-    while True:
-        os.system("clear")
-        print("\n".join(f"{idx+1}. {window}" for idx, window in enumerate(Global.windows)))
+	Global.windows.append("Windows Manager")
+	while True:
+		system("clear")
+		for idx, window in enumerate(Global.windows):
+			print(f"{idx+1}. {window}")
 
-        char = getch()
+		char = getch()
 
-        if char == "q":
-            Global.windows.pop()
-            return
+		if char == "q":
+			Global.windows.pop()
+			return
 
-def filestructure_render(directory, current, indentation=0, doos.path.abspath=True):
-    print(f"{' ' * indentation + ('|---- ' if indentation > 0 else '')}{os.path.abspath(directory) if doabspath else directory} ----|")
+def filestructure_render(directory, current, indentation=0, doabspath=True):
+    print(f"{' ' * indentation + ('|---- ' if indentation > 0 else '')}{abspath(directory) if doabspath else directory} ----|")
 
-    for item in os.listdir(directory):
-        item_path = os.path.join(directory, item)
-        if os.path.isfile(item_path):
+    for item in listdir(directory):
+        item_path = join(directory, item)
+        if isfile(item_path):
             if current and item_path == current:
-                print(f"{' ' * (indentation+2)}|---- [{os.path.abspath(item_path) if doabspath else item_path}]")
+                print(f"{' ' * (indentation+2)}|---- [{abspath(item_path) if doabspath else item_path}]")
             else:
-                print(f"{' ' * (indentation+2)}|---- {os.path.abspath(item_path) if doabspath else item_path}")
-        elif os.path.isdir(item_path):
+                print(f"{' ' * (indentation+2)}|---- {abspath(item_path) if doabspath else item_path}")
+        elif isdir(item_path):
             filestructure_render(item_path, current, indentation=indentation+2, doabspath=doabspath)
 
 
 def filestructure(directory, current=None):
 	Global.windows.append("Filesystem Window")
 	doabspath = True
-	current = os.path.abspath(current)
+	current = abspath(current)
 	while True:
-		os.system("clear")
-		filestructure_render(os.path.abspath(directory), current, doabspath=doabspath)
+		system("clear")
+		filestructure_render(abspath(directory), current, doabspath=doabspath)
 
-		char = sysimps.getch()
+		char = getch()
 		if char == "q":
 			Global.windows.pop()
 			return
@@ -60,6 +63,11 @@ def filestructure(directory, current=None):
 			directory = "/".join(abspath(target).split("/")[:-1])
 		elif char == "o":
 			editor(current)
+		# elif char == "qn":
+		# 	system("tput cnorm")
+		# 	system('echo -n -e "\033]0;\007"')
+		# 	system("clear")
+		# 	exit()
 
 def editor(filename):
 	Global.windows.append(f"Editor Window ({filename})")
