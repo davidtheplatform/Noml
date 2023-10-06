@@ -2,7 +2,7 @@ Noml Documentation
 ------------------
 Welcome to Noml's documentation! This will cover what you can do with Noml, by default you will be brought to a home screen where you can type commands. So first we are going to cover which commands you can use.
 
-# Commmands
+## Commmands
 -----------
 Format: short \<args> <optargs?> (long) (mode) - desc
 
@@ -38,7 +38,7 @@ ln (linenumbers) (editor) - This will toggle line numbers.
 
 v (visualeditor) (editor) - This will open [visual editor mode](#visual-editor)
 
-# Editor
+## Editor
 --------
 The editor interface will first show the filename then the content of the file. The cursor is represented by the yellow and can be moved, it will be used in commands.
 
@@ -46,7 +46,7 @@ If the cursor is on a space, it will show as "\_". If the cursor is on a tab, it
 
 Below that is the commands interface, here editor-specific commands can also be done.
 
-# Visual Editor
+## Visual Editor
 ---------------
 The visual editor can be entered by using the "v" command in the editor, the visual editor is a visual interface for people who don't want to use commands.
 
@@ -58,21 +58,21 @@ Pressing enter will create a new line, if you were in the middle of the previous
 
 You can type "\`" to exit the visual editor. The "\`" was picked because it is the least used character on the QWERTY keyboard.
 
-# Filestructure
+## Filestructure
 ---------------
 The filestructure can be entered using the "fs" command, the filestructure will allow you to move around your filesystem and open files.
 
 If you run with a file opened, your current file will be shown.
 
-You can toggle absolute paths off and on by pressing "a".
+You can toggle absolute paths off and on by pressing `a`.
 
-You can jump to files by pressing "j" and typing in your target.
+You can jump to files by pressing `j` and typing in your target.
 
-You can open your current file by pressing "o".
+You can open your current file by pressing `o`.
 
-You can exit by pressing "q".
+You can exit by pressing `q`.
 
-# Windows
+## Windows
 ---------
 In Noml, when you open a new mode such as main, editor or filestructure. You are creating a new window.
 
