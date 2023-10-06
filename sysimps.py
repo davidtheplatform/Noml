@@ -14,7 +14,7 @@ try:
     
     def getch(read=1):
         chars = []
-        for _ in range(read):
+        for i in range(read):
             firstChar = rgetch()
             if firstChar == '\x1b':
                 chars.append({"[A": "up", "[B": "down", "[C": "right", "[D": "left"}[getch() + getch()])
@@ -26,7 +26,7 @@ except ImportError:
     
     def getch(read=1):
         chars = []
-        for _ in range(read):
+        for i in range(read):
             firstChar = rgetch()
             if firstChar == b'\xe0':
                 chars.append({"H": "up", "P": "down", "M": "right", "K": "left"}[getch()])

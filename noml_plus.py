@@ -65,7 +65,7 @@ def editor(filename):
 	Global.windows.append(f"Editor Window ({filename})")
 	lines = open(filename, "r").readlines()
 	for idx, line in enumerate(lines):
-		lines[idx] = list(line.replace("\n", ""))
+		lines[idx] = [char for char in line.replace("\n", "")]
 	pointer = [0, 0]
 	linenumbers = False
 	visualeditor = False
@@ -97,7 +97,7 @@ def editor(filename):
 			elif cmdname in ("m", "move"):
 				pointer[1] += int(cmdargs[0])
 			elif cmdname in ("mw", "moveword"):
-				current_line = "".join(list(lines[pointer[0]]))
+				current_line = "".join([x for x in lines[pointer[0]]])
 				words = current_line.split()
 				word_idx = words.index(word_at_idx(current_line, pointer[1]))
 				pointer[1] = current_line.index(words[word_idx + int(cmdargs[0])])
@@ -106,16 +106,16 @@ def editor(filename):
 			elif cmdname in ("r", "replace"):
 				lines[pointer[0]][pointer[1]] = cmdargs[0]
 			elif cmdname in ("rw", "replaceword"):
-				current_line = "".join(list(lines[pointer[0]]))
+				current_line = "".join([x for x in lines[pointer[0]]])
 				words = current_line.split()
 				word_idx = words.index(word_at_idx(current_line, pointer[1]))
 				words[word_idx] = cmdargs[0]
-				current_line = " ".join(list(words))
-				lines[pointer[0]] = list(current_line)
+				current_line = " ".join([x for x in words])
+				lines[pointer[0]] = [char for char in current_line]
 			elif cmdname in ("rl", "replaceline"):
-				lines[pointer[0]] = list(cmdargs[0])
+				lines[pointer[0]] = [char for char in cmdargs[0]]
 			elif cmdname in ("f", "find"):
-				current_line = "".join(list(lines[pointer[0]]))
+				current_line = "".join([x for x in lines[pointer[0]]])
 				pointer[1] = current_line.index(cmdargs[0])
 			elif cmdname in ("o", "open", "j", "jump"):
 				system("clear")
@@ -136,6 +136,8 @@ def editor(filename):
 				filestructure("./", filename)
 			elif cmdname in ("w", "windows"):
 				windows()
+			else:
+				pass
 		else:
 			inp = getch()
 			current_line = lines[pointer[0]]
@@ -145,7 +147,7 @@ def editor(filename):
 			elif inp == "\r":
 				line = lines[pointer[0]][pointer[1]:]
 				del lines[pointer[0]][pointer[1]:]
-				lines.insert(pointer[0]+1, list(line))
+				lines.insert(pointer[0]+1, [char for char in line])
 				pointer[0] += 1
 				pointer[1] = 0
 			elif inp == "\x7f":
@@ -214,6 +216,8 @@ def run():
 				filestructure("./")
 			elif cmdname in ("w", "windows"):
 				windows()
+			else:
+				pass
 		except Exception as e:
 			print(e) 
 			window = ""
