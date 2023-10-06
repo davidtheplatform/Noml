@@ -56,7 +56,7 @@ You can type characters like in any other text editor and you can use backslash 
 
 Pressing enter will create a new line, if you were in the middle of the previous line the content from the middle to the end will be moved to the new line.
 
-You can type "`" to exit the visual editor. The "`" was picked because it is the least used character on the QWERTY keyboard.
+You can type "\`" to exit the visual editor. The "\`" was picked because it is the least used character on the QWERTY keyboard.
 
 # Filestructure
 ---------------
