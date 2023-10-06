@@ -83,7 +83,7 @@ def filestructure_render(directory, current, indentation=0, doabspath=True):
 def filestructure(directory, current=None):
 	windows_manager.append("Filesystem Window")
 	doabspath = True
-	current = abspath(current)
+	current = abspath(current) if current else None
 	while True:
 		system("clear")
 		filestructure_render(abspath(directory), current, doabspath=doabspath)
