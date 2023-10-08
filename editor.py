@@ -204,8 +204,9 @@ def editor(filename):
                 pointer[0] += 1
                 pointer[1] = 0
             elif inp == "\x7f":
-                del current_line[pointer[1]]
-                pointer[1] -= 1
+                if not pointer[1] == 0:
+                    del current_line[pointer[1]]
+                    pointer[1] -= 1
             elif inp == "right":
                 pointer[1] += 1
             elif inp == "left":
