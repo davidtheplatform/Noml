@@ -1,5 +1,6 @@
 from os import listdir
 from os.path import exists, abspath, isfile, isdir, join, relpath
+import sys
 if getattr(sys, 'frozen', False):
     from noml.sysimps import getch
     from noml.commands import clear, echo, tput
