@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-from commands import echo, clear, tput
-from editor import run
+import sys
+if getattr(sys, 'frozen', False):
+  from noml.commands import echo, clear, tput
+  from noml.editor import run
 from os import system
 
 tput("civis")
