@@ -23,6 +23,7 @@ jobs:
       
       - name: Build package
         run: |
+          echo ${{ github.event.action }}
           python3 -m PyInstaller app.py --add-data "commands.py:noml" --add-data "editor.py:noml" --add-data "sysimps.py:noml" --hidden-import termios --hidden-import tty --onefile --name noml-${{ matrix.os }}
 
       - name: Create artifacts
